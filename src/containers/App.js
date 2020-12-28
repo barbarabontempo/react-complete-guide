@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import classes from "./App.css";
 import Radium from "radium";
 import styled from "styled-components";
-import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
-import Person from "./Person/Person"; //can omit the .js because its added automatically by the build workflow
-import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
+import Person from "../components/Persons/Person/Person" //can omit the .js because its added automatically by the build workflow
+// import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
+import Persons from "../components/Persons/Persons";
 
 //styled components:
 // const StyledButton = styled.button`
@@ -91,22 +92,22 @@ class App extends Component {
     }));
   };
 
-  // deletePersonHandler = (personIndex) => {
-  //    //this is mutating state directly, dont use this
-  //   // const persons = this.state.persons
-  //   const persons = [...this.state.persons]
-  //   persons.splice(personIndex, 1)
-  //   this.setState({persons: persons})
-  // }
-
-  deletePersonHandler = (id) => {
-    //this is mutating state directly, dont use this
+  deletePersonHandler = (personIndex) => {
+     //this is mutating state directly, dont use this
     // const persons = this.state.persons
-    const updatedPersons = this.state.persons.filter(
-      (person) => person.id !== id
-    );
-    this.setState({ persons: updatedPersons });
-  };
+    const persons = [...this.state.persons]
+    persons.splice(personIndex, 1)
+    this.setState({persons: persons})
+  }
+
+  // deletePersonHandler = (id) => {
+  //   //this is mutating state directly, dont use this
+  //   // const persons = this.state.persons
+  //   const updatedPersons = this.state.persons.filter(
+  //     (person) => person.id !== id
+  //   );
+  //   this.setState({ persons: updatedPersons });
+  // };
 
   // another way to delete:
   // removeComment = commentId => {
@@ -136,22 +137,10 @@ class App extends Component {
     if (this.state.showPerson) {
       persons = (
         <div>
-          {this.state.persons.map((person, index) => {
-            return (
-              <ErrorBoundary key={person.id}>
-                {" "}
-                <Person
-                  changed={(evt) => this.nameChangedHandler(evt, person.id)}
-                  
-                  deletePersonHandler={() =>
-                    this.deletePersonHandler(person.id)
-                  }
-                  name={person.name}
-                  age={person.age}
-                />{" "}
-              </ErrorBoundary>
-            );
-          })}
+          <Persons persons={this.state.persons}
+            clicked={this.deletePersonHandler}
+            changed={this.nameChangedHandler}
+          />
         </div>
       );
     }
