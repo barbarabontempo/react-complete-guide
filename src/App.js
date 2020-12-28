@@ -1,22 +1,23 @@
 import React, { Component } from "react";
-import "./App.css";
+import classes from "./App.css";
 import Radium from "radium";
 import styled from 'styled-components'
 import Person from "./Person/Person"; //can omit the .js because its added automatically by the build workflow
 
-const StyledButton = styled.button`
-  background-color: ${props => props.alt ? 'red' : 'green'};
-  color: white;
-  font: inherit;
-  border: 1px solid blue;
-  padding: 8px;
-  cursor: pointer;
+//styled components: 
+// const StyledButton = styled.button`
+//   background-color: ${props => props.alt ? 'red' : 'green'};
+//   color: white;
+//   font: inherit;
+//   border: 1px solid blue;
+//   padding: 8px;
+//   cursor: pointer;
   
-  &:hover {
-    background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
-    color: black;
-  }
-`;
+//   &:hover {
+//     background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
+//     color: black;
+//   }
+// `;
 
 class App extends Component {
   //state is managed from inside of a component
@@ -41,7 +42,7 @@ class App extends Component {
       },
     ],
     showPerson: false,
-    //state is a special property, it can be changed
+    //state is a special property, it can be changed01
     //if it changes, it will lead React to re-render our DOM, to update the DOM
   };
 
@@ -149,12 +150,12 @@ class App extends Component {
       
     }
 
-    let classes = [];
+    let assignedClasses = [];
     if (this.state.persons.length <= 2) {
-      classes.push("red");
+      assignedClasses.push(classes.red);
     }
     if (this.state.persons.length <= 1) {
-      classes.push("bold");
+      assignedClasses.push(classes.bold);
     }
     return (
       //the code in here, is JSX (JS looking a bit different)
@@ -163,11 +164,14 @@ class App extends Component {
       //code that we can use to write HTML
       <div className="App">
         <h1> Hello, I am a react app</h1>
-        <p className={classes}> working! woo!</p>
+        <p className={assignedClasses}> working! woo!</p>
         {/* inline styling for the button */}
-        <StyledButton  alt={this.state.showPerson} onClick={this.togglePersonHandler}>
+        <button  className={classes.Button} alt={this.state.showPerson} onClick={this.togglePersonHandler}>
           Show Name
-        </StyledButton>
+        </button>
+        {/* <StyledButton  alt={this.state.showPerson} onClick={this.togglePersonHandler}>
+          Show Name
+        </StyledButton> */}
         {persons}
       </div>
       //best practice is to wrap everything in a root element
