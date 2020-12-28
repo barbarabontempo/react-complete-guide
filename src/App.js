@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import classes from "./App.css";
 import Radium from "radium";
-import styled from 'styled-components'
+import styled from "styled-components";
+import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
 import Person from "./Person/Person"; //can omit the .js because its added automatically by the build workflow
+import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
 
-//styled components: 
+//styled components:
 // const StyledButton = styled.button`
 //   background-color: ${props => props.alt ? 'red' : 'green'};
 //   color: white;
@@ -12,7 +14,7 @@ import Person from "./Person/Person"; //can omit the .js because its added autom
 //   border: 1px solid blue;
 //   padding: 8px;
 //   cursor: pointer;
-  
+
 //   &:hover {
 //     background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
 //     color: black;
@@ -136,18 +138,22 @@ class App extends Component {
         <div>
           {this.state.persons.map((person, index) => {
             return (
-              <Person
-                changed={(evt) => this.nameChangedHandler(evt, person.id)}
-                key={person.id}
-                deletePersonHandler={() => this.deletePersonHandler(person.id)}
-                name={person.name}
-                age={person.age}
-              />
+              <ErrorBoundary key={person.id}>
+                {" "}
+                <Person
+                  changed={(evt) => this.nameChangedHandler(evt, person.id)}
+                  
+                  deletePersonHandler={() =>
+                    this.deletePersonHandler(person.id)
+                  }
+                  name={person.name}
+                  age={person.age}
+                />{" "}
+              </ErrorBoundary>
             );
           })}
         </div>
       );
-      
     }
 
     let assignedClasses = [];
@@ -166,7 +172,11 @@ class App extends Component {
         <h1> Hello, I am a react app</h1>
         <p className={assignedClasses}> working! woo!</p>
         {/* inline styling for the button */}
-        <button  className={classes.Button} alt={this.state.showPerson} onClick={this.togglePersonHandler}>
+        <button
+          className={classes.Button}
+          alt={this.state.showPerson}
+          onClick={this.togglePersonHandler}
+        >
           Show Name
         </button>
         {/* <StyledButton  alt={this.state.showPerson} onClick={this.togglePersonHandler}>
