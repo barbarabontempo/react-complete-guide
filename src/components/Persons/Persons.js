@@ -11,8 +11,18 @@ class Persons extends Component {
 
   shouldComponentUpdate(nextProps, nextState){
     console.log('[Persons.js] shouldComponentUpdate')
-    return true;
+    if (
+      nextProps.persons !== this.props.persons ||
+      nextProps.changed !== this.props.changed ||
+      nextProps.clicked !== this.props.clicked
+      ){
+      return true; //this allows for the update
+    } else {
+      return false
+    }
+    // return true;
   }
+  
   
   getSnapshotBeforeUpdate(nextProps, nextState){
     console.log('[Persons.js] getSnapshotBeforeUpdate')
@@ -21,6 +31,11 @@ class Persons extends Component {
 
   componentDidUpdate(){
     console.log('[Person.js] componentDidUpdate ')
+  }
+
+  componentWillUnmount(){
+    //any code you want to run before the component is removed
+    console.log('[Persons.js] componentWillUnmount')
   }
   
   render() {
@@ -41,3 +56,7 @@ class Persons extends Component {
 };
 
 export default Persons;
+
+
+
+//PureComponent: in the end it is a normal component that implements shouldComponentUpdate with a complete props check, will do the same as the shouldComponentUpdate function we have above

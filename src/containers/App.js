@@ -20,9 +20,19 @@ constructor(props){
       { id: 'asdf11', name: 'Frantelope', age: 26 }
     ],
     otherState: 'some other value',
-    showPersons: false
+    showPersons: false,
+    showCockpit: true
   };
 
+  /*
+    An update can be caused by changes to props or state. These methods are called in the following order when a component is being re-rendered:
+
+    static getDerivedStateFromProps()
+    shouldComponentUpdate()
+    render()
+    getSnapshotBeforeUpdate()
+    componentDidUpdate()
+  */ 
   static getDerivedStateFromProps(props, state) { // Rarely Used
     console.log('[App.js] getDerivedState', props)
     return state;
@@ -32,14 +42,45 @@ constructor(props){
   //   console.log('[App.js] componentWillMount')
   // }
 
+
+  /* 
+    These methods are called in the following order when an instance of a component is being created and inserted into the DOM:
+
+    constructor()
+    static getDerivedStateFromProps()
+    render()
+    componentDidMount()
+
+    componentDidMount() is invoked immediately after a component is mounted (inserted into the tree). Initialization that requires DOM nodes should go here. If you need to load data from a remote endpoint, this is a good place to instantiate the network request.
+  */
   componentDidMount(){
     console.log('[App.js] componentDidMount')
   }
 
+  
+/* 
+Use shouldComponentUpdate() to let React know if a component’s output is not affected by the current change in state or props. The default behavior is to re-render on every state change, and in the vast majority of cases you should rely on the default behavior.
+*/
   shouldComponentUpdate(nextProps, nextState){
+     //here we can check if nextProps.persons is different than our current set of persons
+     //right now our persons.js (child comp of app.js) are getting re-rendered; 
+     //since App.js is re-rendering and persons js is a child of app js, it also gets rerendered even though only the cockpit.js is being changed. 
+     //all our persons hooks ran even though nothing in persons change; we can fix this! 
     console.log('[App.js] shouldComponentUpdate')
-    return true; //this allows for the update
+    
+    return true;
   }
+
+
+  /* componentDidUpdate() is invoked immediately after updating occurs. This method is not called for the initial render.
+
+Use this as an opportunity to operate on the DOM when the component has been updated. This is also a good place to do network requests as long as you compare the current props to previous props (e.g. a network request may not be necessary if the props have not changed).
+
+componentDidUpdate() will not be invoked if shouldComponentUpdate() returns false.
+*/
+
+//removal of cockpit now optimized, we just skip re-rendering the Persons.js component and only rerender the Cockpit.js
+//DEV TOOLS: more tools, rendering, enable paint flashing (allows u to see what really gets re-rendered on the real DOM)
 
   componentDidUpdate(){
     console.log('[App.js] componentDidUpdate')
@@ -107,6 +148,12 @@ constructor(props){
     this.setState({ showPersons: !doesShow });
   };
 
+/*
+  If you need to interact with the browser, perform your work in componentDidMount() or the other lifecycle methods instead. Keeping render() pure makes components easier to think about.
+
+render() will not be invoked if shouldComponentUpdate() returns false.
+
+*/
   render() {
     console.log('[App.js] render')
   let persons = null
@@ -123,12 +170,17 @@ constructor(props){
 
     return (
       <div className={classes.App}>
-        <Cockpit
+      <button onClick={() => {
+        this.setState({
+          showCockpit: false
+        })
+      }}>Remove Cockpit</button>
+        {this.state.showCockpit ? <Cockpit
           title={this.props.appTitle}
           showPersons={this.state.showPersons}
-          persons={this.state.persons}
+          personsLength={this.state.persons.length}
           clicked={this.togglePersonsHandler}
-        />
+        /> : null}
         {persons}
       </div>
     );

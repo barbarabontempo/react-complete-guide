@@ -11,7 +11,20 @@ const cockpit = ( props ) => {
     setTimeout(() => {
       alert("saved data to cloud!")
     }, 1000 );
-  }, [props.persons])
+    //this is an anon function that runs before the main useEffect, but after the first render cycle
+    //"runs when useEffect runs for the last time "
+    return () => {
+      console.log('[cockpit.js], cleanup work cockpit')
+    }
+  }, [])
+
+  useEffect(() => {
+    console.log('[cockpit.js], useEffect')
+    return () => {
+      console.log('[cockpit.js], cleanup work SECOND cockpit')
+    }
+  })
+
 
   //useEffect will run all the time, combines CDM and CDU
   //what if we want to send an HTTP request but we only want to do that when the comp is rendered for the FIRST time and not every re-render cycle.. useEffect with out the second argument, will run at every rerender cycle
@@ -35,10 +48,10 @@ const cockpit = ( props ) => {
         btnClass = classes.Red;
     }
 
-    if ( props.persons.length <= 2 ) {
+    if ( props.personsLength <= 2 ) {
       assignedClasses.push( classes.red ); // classes = ['red']
     }
-    if ( props.persons.length <= 1 ) {
+    if ( props.personsLength <= 1 ) {
       assignedClasses.push( classes.bold ); // classes = ['red', 'bold']
     }
 
@@ -53,4 +66,14 @@ const cockpit = ( props ) => {
     );
 };
 
-export default cockpit;
+export default React.memo(cockpit);
+//so right now our cockpit rerenders even when we change a  persons name, however we do not need the cockpit to re-render when we are changing the persons name, since we are not changing the persons array in here
+//so to optimize and not re-render the cockpit when changing a persons name we use: React.memo 
+//this is memoization - react will store a snpshot of this comp and only if this input changes it will rerender it
+
+// react will store a asnapshot of this component and only if its input changes it will re-render it
+
+
+//react memo and shouldCompUpdate
+//when to use them?
+//comps that will update when parents update 
