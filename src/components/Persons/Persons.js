@@ -60,3 +60,8 @@ export default Persons;
 
 
 //PureComponent: in the end it is a normal component that implements shouldComponentUpdate with a complete props check, will do the same as the shouldComponentUpdate function we have above
+
+
+//adjacent elements
+//instead of wrapping your code in a div, you can return an array with commas after each element (mad work tho, did not like this method)
+//another way it wrapping component that does not render html code: <> and </>

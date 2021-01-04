@@ -1,21 +1,33 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import Aux from "../../../hoc/Aux";
 
-import classes from './Person.css';
+import classes from "./Person.css";
 
 class Person extends Component {
   render() {
-    console.log('[Person.js] rendering...');
-    
+    console.log("[Person.js] rendering...");
+
     return (
-      <div className={classes.Person}>
+      <Aux>
+        {/* <div className={classes.Person}> */}
         <p onClick={this.props.click}>
           I'm {this.props.name} and I am {this.props.age} years old!
         </p>
         <p>{this.props.children}</p>
-        <input type="text" onChange={this.props.changed} value={this.props.name} />
-      </div>
+        <input
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+        {/* </div> */}
+      </Aux>
     );
   }
-};
+}
 
 export default Person;
+
+//aux is wrapping our JSX code
+//also something called: React.Fragment 
+//Fragment does the same thing that our aux component is doing, 
+//just import Fragment from react 

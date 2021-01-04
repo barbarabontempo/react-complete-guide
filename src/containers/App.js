@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
-
+import withClass from '../hoc/withClass'
+import Aux from '../hoc/Aux';
 class App extends Component {
 // this will execute the constructor of the component you're extending
 
@@ -169,7 +170,7 @@ render() will not be invoked if shouldComponentUpdate() returns false.
     }
 
     return (
-      <div className={classes.App}>
+      <Aux>
       <button onClick={() => {
         this.setState({
           showCockpit: false
@@ -182,10 +183,26 @@ render() will not be invoked if shouldComponentUpdate() returns false.
           clicked={this.togglePersonsHandler}
         /> : null}
         {persons}
-      </div>
+      </Aux>
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
 
-export default App;
+export default withClass(App, classes.App);
+
+
+
+/* 
+How does React update the DOM?
+Compares virtual DOMS: there are 2 DOMS: "old virutal DOM" and new "rerendered virtual DOM"
+Virtual DOM is simply a DOM representation in JS
+The rerendered DOM is the one that gets created when the render method is called. 
+ 
+Re-rendering does not immeditaly update the real DOM
+it compare the old virutal DOM to the new one, checks for differencs, if it detects differences, it reaches out to he real DOM and updates it
+and then only changes it on the places where the differences were detected. 
+If no differences were found, it will not touch the real DOM
+
+Acessing the DOM is very slow, so virtual DOM improves efficiency 
+*/
