@@ -20,7 +20,11 @@ import React from "react";
 const withClass = (WrappedComponent, className) => {
   return props => (
      <div className={className} >
-         <WrappedComponent />
+         <WrappedComponent {...props}/> 
+         {/* no props here so we can pass props dynamically, the props here will be the props of our wrapped component, withClass returns functional component tht wraps our our export o we export whatever withClass exports. So we need to pass our props to here 
+         props we are getting is JS object, spread operator pulls out all the properties that are inside the props objet and distributes them as key/value pairs on this wrapped component 
+         ex: name: "Barbara", age: 26
+        */}
      </div>
   );//getting props and then returning JSX, we have a function that returns a function (this function we are returning is a functional component)
 };
