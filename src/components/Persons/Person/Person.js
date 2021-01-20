@@ -5,6 +5,12 @@ import classes from "./Person.css";
 import PropTypes from 'prop-types'
 
 class Person extends Component {
+
+  componentDidMount(){
+    document.querySelector('input').focus();
+      this.inputElement.focus();
+  }
+
   render() {
     console.log("[Person.js] rendering...");
 
@@ -17,6 +23,9 @@ class Person extends Component {
         <p>{this.props.children}</p>
         <input
           type="text"
+          //u can add red on any element
+          //a ref is a special property you can pass into any component
+          ref={(inputEl) => {this.inputElement = inputEl}}
           onChange={this.props.changed}
           value={this.props.name}
         />
