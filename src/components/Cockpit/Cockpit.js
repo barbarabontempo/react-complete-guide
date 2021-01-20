@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import classes from './Cockpit.css';
 
 const cockpit = ( props ) => {
 
+  const toggleBtnRef = useRef(null)
+  
   //useEffect takes a function taht will run for every render cycle
   useEffect(() => {
     console.log('[cockpit.js], useEffect')
     //http request
-    setTimeout(() => {
-      alert("saved data to cloud!")
-    }, 1000 );
+    // setTimeout(() => {
+    //   alert("saved data to cloud!")
+    // }, 1000 );
+    toggleBtnRef.current.click()
     //this is an anon function that runs before the main useEffect, but after the first render cycle
     //"runs when useEffect runs for the last time "
     return () => {
@@ -60,6 +63,7 @@ const cockpit = ( props ) => {
             <h1>{props.title}</h1>
             <p className={assignedClasses.join( ' ' )}>This is really working!</p>
             <button
+                ref = {toggleBtnRef}
                 className={btnClass}
                 onClick={props.clicked}>Toggle Persons</button>
         </div>
