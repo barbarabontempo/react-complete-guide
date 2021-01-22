@@ -81,3 +81,14 @@ export default React.memo(cockpit);
 //react memo and shouldCompUpdate
 //when to use them?
 //comps that will update when parents update 
+
+//so right now our cockpit rerenders even when we change a  persons name, however we do not need the cockpit to re-render when we are changing the persons name, since we are not changing the persons array in here
+//so to optimize and not re-render the cockpit when changing a persons name we use: React.memo 
+//this is memoization - react will store a snpshot of this comp and only if this input changes it will rerender it
+
+// react will store a asnapshot of this component and only if its input changes it will re-render it
+
+
+//react memo and shouldCompUpdate
+//when to use them?
+//comps that will update when parents update 
