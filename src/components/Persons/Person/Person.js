@@ -38,6 +38,24 @@ class Person extends Component {
         />
         {/* </div> */}
       </Aux>
+      <Aux>
+        {/* <div className={classes.Person}> */}
+        <p onClick={this.props.click}>
+          I'm {this.props.name} and I am {this.props.age} years old!
+        </p>
+        <p>{this.props.children}</p>
+        <input
+          type="text"
+          //u can add red on any element
+          //a ref is a special property you can pass into any component
+          //old school way of setting up ref
+          // ref={(inputEl) => {this.inputElement = inputEl}}
+          ref={this.inputElementRef}
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+        {/* </div> */}
+      </Aux>
     );
   }
 }
